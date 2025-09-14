@@ -1,0 +1,70 @@
+import random
+
+# Word list
+words = ["python", "java", "swift", "javascript"]
+word = random.choice(words)
+guessed_letter = set()
+won = 0
+lost = 0
+
+masked_word = "-" * len(word)
+attempts = 8
+started = False
+
+print("H A N G M A N")
+
+def hangman():
+    global attempts, masked_word, won, lost, word, guessed_letter, started
+    while started == False:
+        print(f'Type "play" to play the game, "results" to show the scoreboard, and "exit" to quit:')
+        start = input()
+        if start == "play":
+            # reset everything for a new game
+            word = random.choice(words)
+            masked_word = "-" * len(word)
+            attempts = 8
+            guessed_letter = set()
+            started = True
+            break
+        elif start == "results":
+            print(f"""You won: {won} times.
+You lost: {lost} times.""")
+        elif start == "exit":
+            exit()
+
+    while attempts > 0:
+        print(masked_word)
+        guess = input("Input a letter:")
+
+        if len(guess) != 1:
+            print('Please, input a single letter')
+        elif not guess.isalpha() or not guess.islower():
+            print("Please, enter a lowercase letter from the English alphabet")
+        elif guess in guessed_letter:
+            print("You've already guessed this letter")
+        elif guess in word:
+            # reveal guessed letters while keeping previous letters
+            new_masked = list(masked_word)
+            for i, ch in enumerate(word):
+                if ch == guess:
+                    new_masked[i] = guess
+            masked_word = "".join(new_masked)
+            guessed_letter.add(guess)
+            if "-" not in masked_word:
+                print(f'You guessed the word {masked_word}!')
+                print('You survived!')
+                won += 1
+                started = False
+                hangman()
+        else:
+            print("That letter doesn't appear in the word.")
+            attempts -= 1
+            guessed_letter.add(guess)
+
+    if attempts == 0:
+        print('You lost!')
+        lost += 1
+        started = False
+        hangman()
+
+hangman()
