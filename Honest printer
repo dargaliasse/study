@@ -1,0 +1,99 @@
+jobdone = False
+done = False
+memory = 0
+msg_index = {
+    10: "Are you sure? It is only one digit! (y / n)",
+    11: "Don't be silly! It's just one number! Add to the memory? (y / n)",
+    12: "Last chance! Do you really want to embarrass yourself? (y / n)",
+}
+
+
+def check(inpx, inpy, inpoper):
+    msg = ""
+    if is_one_digit(inpx) and is_one_digit(inpy):
+        msg += "... lazy"
+    if (inpx == 1 or inpy == 1) and inpoper == "*":
+        msg += " ... very lazy"
+    if (inpx == 0 or inpy == 0) and (inpoper in ["*", "+", "-"]):
+        msg += " ... very, very lazy"
+    if msg != "":
+        print("You are " + msg.strip())
+
+
+def is_one_digit(vari):
+    return -10 < vari < 10 and float(vari).is_integer()
+
+
+while jobdone == False:
+    while not done:
+        calc = input("Enter an equation ").strip().split()
+
+        # Replace M with memory if used
+        if calc[0] == "M":
+            calc[0] = str(memory)
+        if calc[2] == "M":
+            calc[2] = str(memory)
+
+        if len(calc) != 3:
+            print("Invalid format. Use: number operator number")
+            continue
+
+        try:
+            x = float(calc[0])
+            y = float(calc[2])
+        except ValueError:
+            print("Do you even know what numbers are? Stay focused!")
+            continue
+
+        oper = calc[1]
+        if oper not in ["+", "-", "*", "/"]:
+            print("Yes ... an interesting math operation. You've slept through all classes, haven't you?")
+            continue
+
+        # Handle division by zero first
+        if oper == "/" and y == 0:
+            print("Yeah... division by zero. Smart move...")
+            continue
+
+        # Call check AFTER validating inputs
+        check(x, y, oper)
+
+        done = True
+
+    # Compute the result
+    if oper == "+":
+        result = x + y
+    elif oper == "-":
+        result = x - y
+    elif oper == "*":
+        result = x * y
+    elif oper == "/":
+        result = x / y
+
+    print(result)
+
+    # Ask if we want to store the result
+    store = input("Do you want to store the result? (y / n):").strip().lower()
+    if store == "y":
+        if is_one_digit(result):
+            current_index = 10
+            while True:
+                print(msg_index[current_index])
+                answer = input().lower()
+                if answer == "n":
+                    break
+                elif answer == "y":
+                    if current_index < 12:
+                        current_index += 1
+                    else:
+                        memory = result
+                        break
+        else:
+            memory = result
+
+    # Ask if we want to continue
+    areyoudone = input("Do you want to continue calculations? (y / n):").strip().lower()
+    if areyoudone == "n":
+        jobdone = True
+    else:
+        done = False  # reset for the next calculation
