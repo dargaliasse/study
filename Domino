@@ -1,18 +1,19 @@
 import random
+
 def dominoe_set():
-    dominoes = [[face1,face2] for face1 in range(7) for face2 in range (face1, 7)]
+    """Generate a dominoe set"""
+    dominoes = [[face1,face2] for face1 in range(7) for face2 in range(face1, 7)]
     return dominoes
 
-def generate_domino_set(n=6):
-    return [[face1, face2] for face1 in range(n + 1) for face2 in range(face1, n + 1)]
-
 def shuffle_dominoes(dominoes=None):
+    """Shuffle the dominoes randomly"""
     if dominoes is None:
         dominoes = dominoe_set()
     random.shuffle(dominoes)
     return dominoes
 
 def distribute(dominoes=None):
+    """Distribute the dominoes between the 2 player and the stock piles."""
     if dominoes is None:
         dominoes = shuffle_dominoes()
     player_piece = dominoes[:7]
@@ -20,12 +21,13 @@ def distribute(dominoes=None):
     stock = dominoes[14:]
     return player_piece, computer_piece, stock
 
-def highest_double(player_hand,computer_hand):
+def highest_double(player_hand, computer_hand):
     """Return the highest double in the hand, or None if no doubles."""
     doubles = [tile for hand in (player_hand, computer_hand) for tile in hand if tile[0] == tile[1]]
     return max(doubles, default=None)  # max([], default=None) → None if no doubles
 
 def game_time():
+    """Start game logic"""
     starting_piece = None
     while starting_piece is None:
         player_piece, computer_piece, stock = distribute()
@@ -39,9 +41,26 @@ def game_time():
                 starting_player = "player"
                 computer_piece.remove(starting_piece)
 
-    print(f"""Stock pieces: {stock}      
-Computer pieces: {computer_piece}  
-Player pieces: {player_piece}    
-Domino snake: [{starting_piece}]   
-Status: {starting_player}""")
+    if starting_player == "computer":
+        status_message = "Computer is about to make a move. Press Enter to continue..."
+    else:
+        status_message = "It's your turn to make a move. Enter your command."
+
+    # Fixed player pieces formatting
+    player_pieces_str = "\n".join(f"{i}: {piece}" for i, piece in enumerate(player_piece, start=1))
+
+    # Print output exactly like the example
+    print(f"""{"=" * 70}
+Stock size: {len(stock)}
+Computer pieces: {len(computer_piece)}
+
+{starting_piece}
+
+Your pieces:
+{player_pieces_str}
+
+Status: {status_message}""")
+
+# Start game
 game_time()
+
