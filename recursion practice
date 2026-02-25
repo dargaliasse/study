@@ -1,0 +1,21 @@
+numbers =  [1,2,3,4]
+for i in range(0, 4):
+    print(numbers[i])
+
+numbers = [1, 2, 3, 4]
+for i in numbers:
+    print(i)
+
+list(map(print,numbers))
+
+def move(disk, source, destination, auxiliary):
+
+    if disk == 1: # If you move one disk move directly to destination
+        print(f"move disk from {source} to {destination}")
+
+    else: #for multiple disk
+        move(disk-1,source,auxiliary,destination) # move all except largest disk to auxiliary
+        print(f"Move disk from {source} to {destination}") # move the largest disk to the destination tower
+        move(disk-1,auxiliary,destination,source) # move the disks from the auxiliary tower to the destination tower
+
+move(3, "a", "c", "b")
