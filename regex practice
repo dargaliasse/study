@@ -1,0 +1,2 @@
+user_cred_regex = r"^[A-Z][a-z]* [A-Z][a-z]*$"
+user_mail_regex = r"^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]{3}$"
