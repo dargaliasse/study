@@ -1,0 +1,51 @@
+import shutil
+import os
+import time
+
+file_name = "news.txt"
+copy_file_name = "news_copy.txt"
+
+print("Before operation", os.listdir(".")) # "." is the current directory
+shutil.copy(file_name, copy_file_name)
+print("After operation", os.listdir("."))
+
+# Before the operation: ['news.txt']
+# After the operation: ['news.txt', 'news_copy.txt']
+
+file_path = "/home/user/existence.pdf"
+dst_folder = "/home/user/Articles" #imagine that the folder contains 'innovative_ideas.pdf'
+
+print(f"Before operation, Articles:", os.listdir(dst_folder))
+shutil.copy(file_path, dst_folder)
+print(f"After operation, Articles:", os.listdir(dst_folder))
+
+# Before operation, Articles: ['innovative_ideas.pdf']
+# After operation, Articles: ['existence.pdf', 'innovative_ideas.pdf']
+
+def show_metadata(filepath):
+    stat = os.stat(filepath) #return the status of the files
+    print("Mode    :", oct(stat.st_mode))
+    print("Created :", time.ctime(stat.st_ctime))
+    print("Accessed:", time.ctime(stat.st_atime))
+    print("Modified:", time.ctime(stat.st_mtime))
+
+file_path = "/home/user/existence.pdf"
+dst_folder = "/home/user/Articles"
+
+print("Source File:")
+show_metadata(file_path)
+dst_path = shutil.copy2(file_path, dst_folder)
+print("\nDestination File:")
+show_metadata(dst_path)
+
+# Source File:
+# Mode    : 0o100777
+# Created : Sun Sep 12 13:57:22 2021
+# Accessed: Sun Sep 12 13:57:22 2021
+# Modified: Sun Sep 12 13:57:22 2021
+
+# Destination File:
+# Mode    : 0o100777
+# Created : Mon Sep 13 00:51:21 2021
+# Accessed: Sun Sep 12 13:57:22 2021
+# Modified: Sun Sep 12 13:57:22 2021
