@@ -1,0 +1,17 @@
+xmltest = ("""
+<?xml version='1.0' encoding='UTF-8'?
+<library>
+    <book>
+        <title>The Three-Body Problem</title>
+        <author>Liu Cixin</author>
+    </book>
+    <book>
+        <title>Modern Operation System</title>
+        <author>Andrew S. Tanebaum</author>
+    </book>
+</library>
+""")
+xmltest2 = '<picture name="The Black Square"/>'
+xmltest3 = "<picture \"Sunset at Sea\", Ivan Aivazovsky'/>"
+
+
