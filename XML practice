@@ -14,4 +14,43 @@ xmltest = ("""
 xmltest2 = '<picture name="The Black Square"/>'
 xmltest3 = "<picture \"Sunset at Sea\", Ivan Aivazovsky'/>"
 
+import lxml
 
+from lxml import etree
+
+xml_string = "<a><b>hello</b></a>"
+root = etree.fromstring(xml_string)
+print(type(root)) #<class 'lxml.etree.Element>
+
+xml_path = "xml_file.xml"
+
+tree = etree.parse(xml_path)
+print(type(tree))<#class 'lxml.etree.ElementTree'>
+root = tree.getroot()
+print(ype(root))<#class 'lxml.etree._Element'>
+
+xml_string = "<a><b>hello</b></a>"
+root = etree.fromstring(xml_string)
+
+etree.dump(root)
+# <a>
+#   <b>hello</b>
+# </a>
+
+xml_file = "xml_file.xml"
+root = etree.parse(xml_file).getroot()
+etree.dump(root)
+
+
+# <country>
+#   <name>United Stated of America</name>
+#   <capital>Washington</capital>
+#   <states>
+#     <state>California</state>
+#     <state>Texas</state>
+#     <state>Florida</state>
+#     <state>Hawaii</state>
+#   </states>
+# </country>
+
+etree.dump(root[1])  # <capital>Washington</capital>
