@@ -1,0 +1,12 @@
+class Pet:
+    kind = "mammal"
+    n_pets = 0 #number of pets
+    pets_name = [] #list of pets names
+    def __init__(self, spec,name):
+        self.spec = spec
+        self.name = name
+        self.legs = 4
+
+tom = Pet("cat","Tom")
+avocado = Pet("dog","Avocado")
+ben = Pet("goldfish", "Ben")
