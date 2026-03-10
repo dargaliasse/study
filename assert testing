@@ -1,0 +1,18 @@
+# 1
+word = input("Enter a word: ")
+assert word != "cat"
+print("Your word is", word)
+
+# 2
+word = input("Enter a word: ")
+message = "'cat' is the wrong word!"
+assert word != "cat", message
+print("Your word is", word)
+
+try:
+    word = input("Enter a word: ")
+    message = "'cat' is a wrong word!"
+    assert word != "cat", message
+    print("Your word is", word)
+except AssertionError as err:
+    print(err)  # if the word is 'cat', "'cat' is a wrong word!" is printed
